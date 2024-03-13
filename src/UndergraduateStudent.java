@@ -65,8 +65,10 @@ private String name;
         System.out.println("-------------------------\n");
         System.out.println("Fee Invoice Prepared for Student:");
         System.out.println(id + "-" + name + "\n");
-        System.out.println();
+        System.out.println("1 Credit Hour = $120.25");
         System.out.println("\nCRN\t\tCR_PREFIX\tCR_HOURS\t");
+        System.out.println(undergradCrnsTaken);
+
     }
 }
 */

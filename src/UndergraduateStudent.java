@@ -1,4 +1,4 @@
-public class UndergraduateStudent extends Student {
+/*class UndergraduateStudent extends Student {
 
 private int[] undergradCrnsTaken;
 private double gpa;
@@ -54,7 +54,6 @@ private String name;
     }
     public void setId(String Id){
         this.id = id;
-
     }
 
 
@@ -70,3 +69,4 @@ private String name;
         System.out.println("\nCRN\t\tCR_PREFIX\tCR_HOURS\t");
     }
 }
+*/

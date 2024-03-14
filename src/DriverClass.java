@@ -1,13 +1,34 @@
+//Unit 5 Assignment 5
+//Group Members: Jean Carlos Lin Lai, Wenteng Lin
+
 import java.util.ArrayList;
 public class DriverClass {
     public static void main(String[] args) {
         Student s;
+        s = new PhdStudent ("Zaydoun BenSellam",
+                "zb5954" ,
+                "Gary Richarson",
+                "Fuzzy Topology" ,
+                2599 );
+
+        s.printInvoice();
+
+
+        //***********
+        int [] gradCrnsTaken = {7587,8997} ;
+        s = new MsStudent ( "Emily Jones",
+                "em1254",
+                gradCrnsTaken,
+                1997);
+        s.printInvoice();
+
+
         int [] undergradCrnsTaken = {4587,2599};
         s = new UndergraduateStudent ("Jamila Jones" ,
                 "ja5225" ,
                 undergradCrnsTaken ,
                 3.0,
-                false );
+                true);
         s.printInvoice();
     }
 }
@@ -154,15 +175,18 @@ class UndergraduateStudent extends Student {
         double totalPayment = 0;
         gpa = getGpa();
 
+        if(resident != true){
+            creditHourFee= creditHourFee * 2;
+        }else {
+            creditHourFee = 120.25;
+        }
+
         for(int crn: undergradCrnsTaken){
             int creditHour = getCreditHour(crn);
             totalPayment += creditHour * creditHourFee;
         }
 
             return totalPayment + services;
-
-
-
     }
     private double calculateUnderGradDiscount(){
         double creditHourFee = 120.25;
@@ -170,18 +194,24 @@ class UndergraduateStudent extends Student {
         double totalPayment = 0;
         gpa = getGpa();
 
-        for(int crn: undergradCrnsTaken){
-            int creditHour = getCreditHour(crn);
-            totalPayment += creditHour * creditHourFee;
-        }
+        totalPayment = calculateUndergradPay();
 
         if(gpa >= 3.5 && totalPayment >= 500){
-            return ((totalPayment + services) * 0.25);
+            return ((totalPayment) * 0.25);
         }
         else{
             return totalPayment = 0;
         }
 
+    }
+
+    public double checkResidentDiscount(){
+        double creditHourPrice = 120.25;
+        if (resident != true){
+            return creditHourPrice * 2;
+        }else {
+            return creditHourPrice;
+        }
     }
 
     @Override
@@ -192,10 +222,17 @@ class UndergraduateStudent extends Student {
         System.out.println("-------------------------\n");
         System.out.println("Fee Invoice Prepared for Student:");
         System.out.println(getId() + "-" + getName() + "\n");
-        System.out.println("1 Credit Hour = $120.25");
+        System.out.println("1 Credit Hour = $" + checkResidentDiscount());
         System.out.println("\nCRN\t\tCR_PREFIX\tCR_HOURS\tCOURSE TOT\t");
         for(int crn: undergradCrnsTaken){
-            double courseTotal = getCreditHour(crn) * 120.25;
+            double courseTotal;
+
+            if (resident != true){
+                 courseTotal = getCreditHour(crn) * (120.25 * 2);
+            }else{
+                  courseTotal = getCreditHour(crn) * 120.25;
+            }
+
 
             System.out.println(crn +"   "+ getCourseName(crn)+"     "+getCreditHour(crn)+ "             "+ courseTotal);
         }
@@ -230,21 +267,36 @@ abstract class GraduateStudent extends Student{
 class PhdStudent extends GraduateStudent {
     private String advisor;
     private String researchSubject;
-    public PhdStudent(String name, String id, String advisor, String researchSubject ,int crn){
+
+    public PhdStudent(String name, String id, String advisor, String researchSubject, int crn) {
         super(name, id, crn);
         this.advisor = advisor;
-        this.researchSubject= researchSubject;
+        this.researchSubject = researchSubject;
     }
+
+    public double checkIfResearch() {
+        researchSubject = researchSubject;
+        double reserachCost = 700;
+        if (researchSubject != null) {
+            return reserachCost;
+        } else {return 0;
+        }
+    }
+
 
     @Override
     public void printInvoice(){
+        double services = 35;
         System.out.println("\nVALENCE COLLEGE");
         System.out.println("ORLANDO FL 10101");
         System.out.println("-------------------------\n");
         System.out.println("Fee Invoice Prepared for Student:");
         System.out.println(getId() + "-" + getName() + "\n");
         System.out.println("Research");
-        System.out.println(researchSubject+"             $700");
+        System.out.println(researchSubject+"             $ "+ checkIfResearch());
+        System.out.println("\t\tHealth and ID  $ " + services);
+        System.out.println("-------------------------\n");
+        System.out.println("\t\tTotal Payments $ "+ (checkIfResearch()+services));
 
     }
 }
@@ -255,13 +307,40 @@ class MsStudent extends GraduateStudent {
         super(name, id, crn);
         this.gradCrnsTaken=gradCrnsTaken;
     }
+    public double calculateGradPay(){
+        double creditHourFee = 300;
+        double services = 35;
+        double totalPayment = 0;
+
+        for(int crn: gradCrnsTaken){
+            int creditHour = getCreditHour(crn);
+            totalPayment += creditHour * creditHourFee;
+        }
+
+        return totalPayment + services;
+
+
+
+    }
     @Override
     public void printInvoice() {
+        double services = 35;
         System.out.println("\nVALENCE COLLEGE");
         System.out.println("ORLANDO FL 10101");
         System.out.println("-------------------------\n");
         System.out.println("Fee Invoice Prepared for Student:");
         System.out.println(getId() + "-" + getName() + "\n");
         System.out.println("1 Credit Hour = $300.00");
+        System.out.println("\nCRN\t\tCR_PREFIX\tCR_HOURS\tCOURSE TOT\t");
+        for(int crn: gradCrnsTaken){
+            double courseTotal = getCreditHour(crn) * 300;
+
+            System.out.println(crn +"   "+ getCourseName(crn)+"     "+getCreditHour(crn)+ "             "+ courseTotal);
+        }
+        System.out.println("\tHealth and id Fees  $"  + services);
+        System.out.println("------------------------------------");
+        System.out.println("\t\t Total Payments $" +(calculateGradPay()));
+
+
     }
 }

@@ -1,8 +1,14 @@
 import java.util.ArrayList;
 public class DriverClass {
     public static void main(String[] args) {
-
-
+        Student s;
+        int [] undergradCrnsTaken = {4587,2599};
+        s = new UndergraduateStudent ("Jamila Jones" ,
+                "ja5225" ,
+                undergradCrnsTaken ,
+                3.0,
+                false );
+        s.printInvoice();
     }
 }
 
@@ -142,27 +148,63 @@ class UndergraduateStudent extends Student {
         this.resident = resident;
     }
 
-    public void calculateUndergradPay(){
-        int i=0;
-        double total =0;
-        int hour = 0;
-        for(Integer crn: undergradCrnsTaken){
-            hour += getCreditHour(crn);
+    public double calculateUndergradPay(){
+        double creditHourFee = 120.25;
+        double services = 35;
+        double totalPayment = 0;
+        gpa = getGpa();
+
+        for(int crn: undergradCrnsTaken){
+            int creditHour = getCreditHour(crn);
+            totalPayment += creditHour * creditHourFee;
         }
-        total = hour * 120.25;
+
+            return totalPayment + services;
+
+
+
     }
+    private double calculateUnderGradDiscount(){
+        double creditHourFee = 120.25;
+        double services = 35;
+        double totalPayment = 0;
+        gpa = getGpa();
+
+        for(int crn: undergradCrnsTaken){
+            int creditHour = getCreditHour(crn);
+            totalPayment += creditHour * creditHourFee;
+        }
+
+        if(gpa >= 3.5 && totalPayment >= 500){
+            return ((totalPayment + services) * 0.25);
+        }
+        else{
+            return totalPayment = 0;
+        }
+
+    }
+
     @Override
     public void printInvoice(){
+        double service = 35.00;
         System.out.println("\nVALENCE COLLEGE");
         System.out.println("ORLANDO FL 10101");
         System.out.println("-------------------------\n");
         System.out.println("Fee Invoice Prepared for Student:");
         System.out.println(getId() + "-" + getName() + "\n");
         System.out.println("1 Credit Hour = $120.25");
-        System.out.println("\nCRN\t\tCR_PREFIX\tCR_HOURS\t");
+        System.out.println("\nCRN\t\tCR_PREFIX\tCR_HOURS\tCOURSE TOT\t");
         for(int crn: undergradCrnsTaken){
-            System.out.println(crn +"   "+ getCourseName(crn)+"     "+getCreditHour(crn));
+            double courseTotal = getCreditHour(crn) * 120.25;
+
+            System.out.println(crn +"   "+ getCourseName(crn)+"     "+getCreditHour(crn)+ "             "+ courseTotal);
         }
+        System.out.println("\tHealth and id Fees  $"  + service);
+        System.out.println("------------------------------------");
+        System.out.println("\t\t Total Payment: $"+ calculateUndergradPay());
+        System.out.println("\t\t               -$"+ calculateUnderGradDiscount());
+        System.out.println("------------------------------------");
+        System.out.println("\t\t Total Payments $" +(calculateUndergradPay() - calculateUnderGradDiscount()));
     }
 }
 

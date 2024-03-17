@@ -13,8 +13,6 @@ public class DriverClass {
                 2599 );
 
         s.printInvoice();
-
-
         //***********
         int [] gradCrnsTaken = {7587,8997} ;
         s = new MsStudent ( "Emily Jones",
@@ -23,7 +21,7 @@ public class DriverClass {
                 1997);
         s.printInvoice();
 
-
+        //************
         int [] undergradCrnsTaken = {4587,2599};
         s = new UndergraduateStudent ("Jamila Jones" ,
                 "ja5225" ,
@@ -235,7 +233,7 @@ class UndergraduateStudent extends Student {
         System.out.println("Fee Invoice Prepared for Student:");
         System.out.println(getId() + "-" + getName() + "\n");
         System.out.println("1 Credit Hour = $" + checkResidentDiscount());
-        System.out.println("\nCRN\t\tCR_PREFIX\tCR_HOURS\tCOURSE TOT\t");
+        System.out.println("\nCRN\t\tCR_PREFIX\tCR_HOURS\t");
         for(int crn: undergradCrnsTaken){
             double courseTotal;
 
@@ -246,14 +244,14 @@ class UndergraduateStudent extends Student {
             }
 
 
-            System.out.println(crn +"   "+ getCourseName(crn)+"     "+getCreditHour(crn)+ "             "+ courseTotal);
+            System.out.println(crn +"\t"+ getCourseName(crn)+"\t\t"+getCreditHour(crn)+ "\t\t\t$ "+ courseTotal);
         }
-        System.out.println("\tHealth and id Fees  $"  + service);
-        System.out.println("------------------------------------");
-        System.out.println("\t\t Total Payment: $"+ calculateUndergradPay());
-        System.out.println("\t\t               -$"+ calculateUnderGradDiscount());
-        System.out.println("------------------------------------");
-        System.out.println("\t\t Total Payments $" +(calculateUndergradPay() - calculateUnderGradDiscount()));
+        System.out.println("\t\t\tHealth and id Fees  $ "  + service);
+        System.out.println("-----------------------------------------");
+        System.out.println("\t\t\t\tTotal Payment:  $ "+ calculateUndergradPay());
+        System.out.println("\t\t\t\t\t\t\t   -$ "+ calculateUnderGradDiscount());
+        System.out.println("-----------------------------------------");
+        System.out.println("\t\t\t\tTotal Payments  $ " +(calculateUndergradPay() - calculateUnderGradDiscount()));
     }
 }
 
@@ -326,14 +324,14 @@ class PhdStudent extends GraduateStudent {
         double services = 35;
         System.out.println("\nVALENCE COLLEGE");
         System.out.println("ORLANDO FL 10101");
-        System.out.println("-------------------------\n");
+        System.out.println("--------------------------------------\n");
         System.out.println("Fee Invoice Prepared for Student:");
         System.out.println(getId() + "-" + getName() + "\n");
         System.out.println("Research");
-        System.out.println(researchSubject+"             $ "+ checkIfResearch());
-        System.out.println("\t\tHealth and ID  $ " + services);
-        System.out.println("-------------------------\n");
-        System.out.println("\t\tTotal Payments $ "+ (checkIfResearch()+services));
+        System.out.println(researchSubject+"\t\t\t$ "+ checkIfResearch()+ "\n");
+        System.out.println("\t\tHealth and ID\t$ " + services);
+        System.out.println("--------------------------------------");
+        System.out.println("\t\tTotal Payments\t$ "+ (checkIfResearch()+services));
 
     }
 }
@@ -379,15 +377,15 @@ class MsStudent extends GraduateStudent {
         System.out.println("Fee Invoice Prepared for Student:");
         System.out.println(getId() + "-" + getName() + "\n");
         System.out.println("1 Credit Hour = $300.00");
-        System.out.println("\nCRN\t\tCR_PREFIX\tCR_HOURS\tCOURSE TOT\t");
+        System.out.println("\nCRN\t\tCR_PREFIX\tCR_HOURS\t");
         for(int crn: gradCrnsTaken){
             double courseTotal = getCreditHour(crn) * 300;
 
-            System.out.println(crn +"   "+ getCourseName(crn)+"     "+getCreditHour(crn)+ "             "+ courseTotal);
+            System.out.println(crn +"\t"+ getCourseName(crn)+"\t\t"+getCreditHour(crn)+ "\t\t\t$ "+ courseTotal);
         }
-        System.out.println("\tHealth and id Fees  $"  + services);
-        System.out.println("------------------------------------");
-        System.out.println("\t\t Total Payments $" +(calculateGradPay()));
+        System.out.println("\t\t\tHealth and id Fees  $ "  + services);
+        System.out.println("--------------------------------------------");
+        System.out.println("\t\t\t\tTotal Payments  $ " +(calculateGradPay()));
 
 
     }

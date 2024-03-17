@@ -2,6 +2,7 @@
 //Group Members: Jean Carlos Lin Lai, Wenteng Lin
 
 import java.util.ArrayList;
+//driver class
 public class DriverClass {
     public static void main(String[] args) {
         Student s;
@@ -33,11 +34,12 @@ public class DriverClass {
     }
 }
 
-//------------------------------
+//-------------------------------
+//Student class
 abstract  class Student{
     private String name;
     private String id;
-
+// setters and getters
     public String getName(){
         return name;
     }
@@ -57,6 +59,8 @@ abstract  class Student{
         this.name = name;
         this.id = id;
     }
+
+    //switch to get course name and credit hour
     public String getCourseName(int crn){
         switch(crn){
             case 4587:
@@ -135,6 +139,8 @@ abstract  class Student{
     abstract public void printInvoice();
 }
 //---------------------------------------------
+
+// Undergrad class
 class UndergraduateStudent extends Student {
     private int[] undergradCrnsTaken;
     private double gpa;
@@ -148,6 +154,8 @@ class UndergraduateStudent extends Student {
         this.resident = resident;
 
     }
+
+    // getter and setter
     public int[] getUndergradCrnsTaken() {
         return undergradCrnsTaken;
     }
@@ -169,6 +177,7 @@ class UndergraduateStudent extends Student {
         this.resident = resident;
     }
 
+    // calculate payment
     public double calculateUndergradPay(){
         double creditHourFee = 120.25;
         double services = 35;
@@ -186,8 +195,10 @@ class UndergraduateStudent extends Student {
             totalPayment += creditHour * creditHourFee;
         }
 
-            return totalPayment + services;
+        return totalPayment + services;
     }
+
+    // calculate discount to give based on GPA
     private double calculateUnderGradDiscount(){
         double creditHourFee = 120.25;
         double services = 35;
@@ -204,7 +215,7 @@ class UndergraduateStudent extends Student {
         }
 
     }
-
+// calculate discount based on residency
     public double checkResidentDiscount(){
         double creditHourPrice = 120.25;
         if (resident != true){
@@ -214,6 +225,7 @@ class UndergraduateStudent extends Student {
         }
     }
 
+    // print invoice
     @Override
     public void printInvoice(){
         double service = 35.00;
@@ -228,9 +240,9 @@ class UndergraduateStudent extends Student {
             double courseTotal;
 
             if (resident != true){
-                 courseTotal = getCreditHour(crn) * (120.25 * 2);
+                courseTotal = getCreditHour(crn) * (120.25 * 2);
             }else{
-                  courseTotal = getCreditHour(crn) * 120.25;
+                courseTotal = getCreditHour(crn) * 120.25;
             }
 
 
@@ -246,9 +258,11 @@ class UndergraduateStudent extends Student {
 }
 
 //-------------------------------------
+// Graduate student class
 abstract class GraduateStudent extends Student{
     int crn;
 
+    // getter and setter
     public void setCrn(int crn){
         this.crn= crn;
     }
@@ -256,6 +270,7 @@ abstract class GraduateStudent extends Student{
     public int getCrn(){
         return crn;
     }
+
     public GraduateStudent (String name, String id, int crn){
         super(name, id);
         this.crn = crn;
@@ -265,8 +280,28 @@ abstract class GraduateStudent extends Student{
 
 //-------------------------------
 class PhdStudent extends GraduateStudent {
+
     private String advisor;
+
     private String researchSubject;
+
+    // getter and setter
+
+    public String getResearchSubject() {
+        return researchSubject;
+    }
+
+    public void setResearchSubject(String researchSubject) {
+        this.researchSubject = researchSubject;
+    }
+
+    public String getAdvisor() {
+        return advisor;
+    }
+
+    public void setAdvisor(String advisor) {
+        this.advisor = advisor;
+    }
 
     public PhdStudent(String name, String id, String advisor, String researchSubject, int crn) {
         super(name, id, crn);
@@ -274,6 +309,8 @@ class PhdStudent extends GraduateStudent {
         this.researchSubject = researchSubject;
     }
 
+
+    //check for whether they are doing research
     public double checkIfResearch() {
         researchSubject = researchSubject;
         double reserachCost = 700;
@@ -283,7 +320,7 @@ class PhdStudent extends GraduateStudent {
         }
     }
 
-
+// print invoice
     @Override
     public void printInvoice(){
         double services = 35;
@@ -303,10 +340,21 @@ class PhdStudent extends GraduateStudent {
 class MsStudent extends GraduateStudent {
     private int [] gradCrnsTaken;
     private int crn;
+
+    //getter and setter
+    public int[] getGradCrnsTaken() {
+        return gradCrnsTaken;
+    }
+
+    public void setGradCrnsTaken(int[] gradCrnsTaken) {
+        this.gradCrnsTaken = gradCrnsTaken;
+    }
+
     public MsStudent (String name, String id , int [] gradCrnsTaken , int crn ){
         super(name, id, crn);
         this.gradCrnsTaken=gradCrnsTaken;
     }
+
     public double calculateGradPay(){
         double creditHourFee = 300;
         double services = 35;
@@ -320,8 +368,8 @@ class MsStudent extends GraduateStudent {
         return totalPayment + services;
 
 
-
     }
+    //print invoice
     @Override
     public void printInvoice() {
         double services = 35;
